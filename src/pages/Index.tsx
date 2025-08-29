@@ -13,22 +13,58 @@ const Index = () => {
   const [language, setLanguage] = useState("ar");
 
   const initiatives = [
-    { icon: Users, title: "مبادرات حكومية", titleFr: "Initiatives gouvernementales" },
-    { icon: BookOpen, title: "دورات تدريبية في المالية", titleFr: "Formations financières" },
-    { icon: Briefcase, title: "فرص عمل", titleFr: "Opportunités d'emploi" },
-    { icon: GraduationCap, title: "ورش مهارات الحياة", titleFr: "Ateliers de compétences" },
+    { 
+      icon: Users, 
+      title: "مبادرات حكومية", 
+      titleFr: "Initiatives gouvernementales",
+      titleEn: "Government initiatives"
+    },
+    { 
+      icon: BookOpen, 
+      title: "دورات تدريبية في المالية", 
+      titleFr: "Formations financières",
+      titleEn: "Training courses in finance"
+    },
+    { 
+      icon: Briefcase, 
+      title: "فرص عمل", 
+      titleFr: "Opportunités d'emploi",
+      titleEn: "Job opportunities"
+    },
+    { 
+      icon: GraduationCap, 
+      title: "ورش مهارات الحياة", 
+      titleFr: "Ateliers de compétences",
+      titleEn: "Life skills workshops"
+    },
   ];
 
   const navItems = [
-    { to: "/about", label: "من نحن", labelFr: "À propos" },
-    { to: "/discover", label: "اكتشف", labelFr: "Découvrir" },
-    { to: "/quiz", label: "اختبر معرفتك", labelFr: "Quiz" },
-    { to: "/sectors", label: "القطاعات", labelFr: "Secteurs" },
-    { to: "/my-region", label: "منطقتي ومشاريعي", labelFr: "Ma région" },
-    { to: "/share-opinion", label: "شارك رأيك", labelFr: "Partager" },
-    { to: "/partners", label: "شركاء", labelFr: "Partenaires" },
-    { to: "/report-problem", label: "بلّغ عن مشكلة", labelFr: "Signaler" },
+    { to: "/discover", label: "فيديو تعريفي", labelFr: "Vidéo introductive", labelEn: "Introductory Video" },
+    { to: "/about", label: "قانون المالية مبسط", labelFr: "Loi de finances expliquée", labelEn: "Finance Law Explained" },
+    { to: "/quiz", label: "اختبر معرفتك", labelFr: "Quiz", labelEn: "Quiz" },
+    { to: "/sectors", label: "القطاعات", labelFr: "Secteurs", labelEn: "Sectors" },
+    { to: "/my-region", label: "الأقاليم", labelFr: "Régions", labelEn: "Regions" },
+    { to: "/share-opinion", label: "شارك رأيك", labelFr: "Voix de la jeunesse", labelEn: "Youth Voices" },
+    { to: "/partners", label: "شركاء", labelFr: "Partenaires", labelEn: "Partners" },
+    { to: "/report-problem", label: "بلّغ عن مشكلة", labelFr: "Signaler un problème", labelEn: "Report a Problem" },
   ];
+
+  const getNavLabel = (item: any) => {
+    switch(language) {
+      case "fr": return item.labelFr;
+      case "en": return item.labelEn;
+      default: return item.label;
+    }
+  };
+
+  const getInitiativeTitle = (initiative: any) => {
+    switch(language) {
+      case "fr": return initiative.titleFr;
+      case "en": return initiative.titleEn;
+      default: return initiative.title;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background" dir={language === "ar" ? "rtl" : "ltr"}>
@@ -40,7 +76,7 @@ const Index = () => {
               <div className="text-2xl font-bold text-primary">
                 <span className="text-primary">Mizaniaty.ma</span>
                 <div className="text-lg text-muted-foreground">
-                  {language === "ar" ? "ميزانيتي" : "Ma Budget"}
+                  {language === "ar" ? "ميزانيتي" : language === "fr" ? "Ma Budget" : "My Budget"}
                 </div>
               </div>
             </div>
@@ -52,16 +88,17 @@ const Index = () => {
                   to={item.to}
                   className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {language === "ar" ? item.label : item.labelFr}
+                  {getNavLabel(item)}
                 </Link>
               ))}
               <Select value={language} onValueChange={setLanguage}>
-                <SelectTrigger className="w-20">
+                <SelectTrigger className="w-24">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="ar">العربية</SelectItem>
                   <SelectItem value="fr">Français</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
                 </SelectContent>
               </Select>
             </nav>
@@ -76,10 +113,10 @@ const Index = () => {
             <div className="space-y-8">
               <div className="space-y-4">
                 <h1 className="text-4xl lg:text-6xl font-bold text-foreground">
-                  {language === "ar" ? "ميزانيتي.ما" : "Mizaniaty.ma"}
+                  Mizaniaty.ma
                 </h1>
                 <p className="text-xl text-muted-foreground">
-                  {language === "ar" ? "Ma Budget" : "Votre Budget"}
+                  {language === "ar" ? "ميزانيتي" : language === "fr" ? "Ma Budget" : "My Budget"}
                 </p>
               </div>
 
@@ -87,13 +124,20 @@ const Index = () => {
               <div className="space-y-6">
                 <div className="p-6 bg-primary/10 rounded-lg border border-primary/20">
                   <h2 className="text-2xl font-bold text-primary mb-4">
-                    {language === "ar" ? "أين تذهب أموالك؟ اكتشف الميزانية بطريقتك." : "Où va votre argent ? Découvrez le budget à votre façon."}
+                    {language === "ar" 
+                      ? "أين تنفق الميزانية؟ اكتشف الميزانية بطريقتك" 
+                      : language === "fr" 
+                      ? "Où est dépensé le budget ? Découvrez le budget à votre façon"
+                      : "Where does your money go? Explore the budget your way"
+                    }
                   </h2>
-                  {language === "ar" && (
-                    <p className="text-lg text-muted-foreground">
-                      فلوسك فين كيمشيو؟ عرّف الميزانية على طريقتك.
-                    </p>
-                  )}
+                  
+                  {/* Show all three slogans */}
+                  <div className="space-y-3 text-sm text-muted-foreground">
+                    <p>🇲🇦 أين تنفق الميزانية؟ اكتشف الميزانية بطريقتك</p>
+                    <p>🇫🇷 Où est dépensé le budget ? Découvrez le budget à votre façon</p>
+                    <p>🇬🇧 Where does your money go? Explore the budget your way</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,38 +146,63 @@ const Index = () => {
             <Card className="w-full max-w-md mx-auto">
               <CardHeader>
                 <CardTitle className="text-center">
-                  {language === "ar" ? "إنشاء حساب جديد" : "Créer un compte"}
+                  {language === "ar" 
+                    ? "إنشاء حساب جديد" 
+                    : language === "fr" 
+                    ? "Créer un compte"
+                    : "Create an account"
+                  }
                 </CardTitle>
                 <CardDescription className="text-center">
-                  {language === "ar" ? "انضم إلينا لاكتشاف ميزانيتك" : "Rejoignez-nous pour découvrir votre budget"}
+                  {language === "ar" 
+                    ? "انضم إلينا لاكتشاف ميزانيتك" 
+                    : language === "fr"
+                    ? "Rejoignez-nous pour découvrir votre budget"
+                    : "Join us to explore your budget"
+                  }
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <Tabs defaultValue="visitor" className="w-full">
                   <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="visitor">
-                      {language === "ar" ? "زائر" : "Visiteur"}
+                      {language === "ar" ? "زائر" : language === "fr" ? "Visiteur" : "Visitor"}
                     </TabsTrigger>
                     <TabsTrigger value="member">
-                      {language === "ar" ? "عضو" : "Membre"}
+                      {language === "ar" ? "عضو" : language === "fr" ? "Membre" : "Member"}
                     </TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="visitor" className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">
-                        {language === "ar" ? "الاسم الكامل" : "Nom complet"}
+                        {language === "ar" ? "الاسم الكامل" : language === "fr" ? "Nom complet" : "Full Name"}
                       </Label>
-                      <Input id="name" placeholder={language === "ar" ? "أدخل اسمك" : "Entrez votre nom"} />
+                      <Input 
+                        id="name" 
+                        placeholder={
+                          language === "ar" ? "أدخل اسمك" : 
+                          language === "fr" ? "Entrez votre nom" : 
+                          "Enter your name"
+                        } 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">
                         {language === "ar" ? "البريد الإلكتروني" : "Email"}
                       </Label>
-                      <Input id="email" type="email" placeholder={language === "ar" ? "أدخل بريدك الإلكتروني" : "Entrez votre email"} />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder={
+                          language === "ar" ? "أدخل بريدك الإلكتروني" : 
+                          language === "fr" ? "Entrez votre email" : 
+                          "Enter your email"
+                        } 
+                      />
                     </div>
                     <Button className="w-full">
-                      {language === "ar" ? "إنشاء حساب" : "Créer un compte"}
+                      {language === "ar" ? "إنشاء حساب" : language === "fr" ? "Créer un compte" : "Create Account"}
                     </Button>
                   </TabsContent>
                   
@@ -142,16 +211,32 @@ const Index = () => {
                       <Label htmlFor="member-email">
                         {language === "ar" ? "البريد الإلكتروني" : "Email"}
                       </Label>
-                      <Input id="member-email" type="email" placeholder={language === "ar" ? "أدخل بريدك الإلكتروني" : "Entrez votre email"} />
+                      <Input 
+                        id="member-email" 
+                        type="email" 
+                        placeholder={
+                          language === "ar" ? "أدخل بريدك الإلكتروني" : 
+                          language === "fr" ? "Entrez votre email" : 
+                          "Enter your email"
+                        } 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="password">
-                        {language === "ar" ? "كلمة المرور" : "Mot de passe"}
+                        {language === "ar" ? "كلمة المرور" : language === "fr" ? "Mot de passe" : "Password"}
                       </Label>
-                      <Input id="password" type="password" placeholder={language === "ar" ? "أدخل كلمة المرور" : "Entrez votre mot de passe"} />
+                      <Input 
+                        id="password" 
+                        type="password" 
+                        placeholder={
+                          language === "ar" ? "أدخل كلمة المرور" : 
+                          language === "fr" ? "Entrez votre mot de passe" : 
+                          "Enter your password"
+                        } 
+                      />
                     </div>
                     <Button className="w-full">
-                      {language === "ar" ? "تسجيل الدخول" : "Se connecter"}
+                      {language === "ar" ? "تسجيل الدخول" : language === "fr" ? "Se connecter" : "Sign In"}
                     </Button>
                   </TabsContent>
                 </Tabs>
@@ -166,12 +251,19 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-primary mb-4">
-              {language === "ar" ? "مبادرات تنموية" : "Initiatives de développement"}
+              {language === "ar" 
+                ? "مبادرات تنموية" 
+                : language === "fr" 
+                ? "Initiatives de développement"
+                : "Development Initiatives"
+              }
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {language === "ar" 
                 ? "اكتشف المبادرات والفرص المتاحة لتطوير مهاراتك ومشاركتك في التنمية الاقتصادية"
-                : "Découvrez les initiatives et opportunités disponibles pour développer vos compétences et votre participation au développement économique"
+                : language === "fr"
+                ? "Découvrez les initiatives et opportunités disponibles pour développer vos compétences et votre participation au développement économique"
+                : "Discover the initiatives and opportunities available to develop your skills and participate in economic development"
               }
             </p>
           </div>
@@ -184,7 +276,7 @@ const Index = () => {
                     <initiative.icon className="h-8 w-8 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2">
-                    {language === "ar" ? initiative.title : initiative.titleFr}
+                    {getInitiativeTitle(initiative)}
                   </h3>
                 </CardContent>
               </Card>
@@ -198,7 +290,7 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-primary mb-4">
-              {language === "ar" ? "استكشف المنصة" : "Explorer la plateforme"}
+              {language === "ar" ? "استكشف المنصة" : language === "fr" ? "Explorer la plateforme" : "Explore the Platform"}
             </h2>
           </div>
           
@@ -209,13 +301,15 @@ const Index = () => {
                   <div className="flex items-center gap-4 mb-4">
                     <Globe className="h-8 w-8 text-primary" />
                     <h3 className="text-lg font-semibold">
-                      {language === "ar" ? "اكتشف" : "Découvrir"}
+                      {language === "ar" ? "فيديو تعريفي" : language === "fr" ? "Vidéo introductive" : "Introductory Video"}
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     {language === "ar" 
                       ? "تعلم كيفية استخدام المنصة وفهم قانون المالية"
-                      : "Apprenez à utiliser la plateforme et comprendre la loi de finances"
+                      : language === "fr"
+                      ? "Apprenez à utiliser la plateforme et comprendre la loi de finances"
+                      : "Learn how to use the platform and understand finance law"
                     }
                   </p>
                 </CardContent>
@@ -228,13 +322,15 @@ const Index = () => {
                   <div className="flex items-center gap-4 mb-4">
                     <FileText className="h-8 w-8 text-primary" />
                     <h3 className="text-lg font-semibold">
-                      {language === "ar" ? "اختبر معرفتك" : "Quiz"}
+                      {language === "ar" ? "اختبر معرفتك" : language === "fr" ? "Quiz" : "Quiz"}
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     {language === "ar" 
                       ? "استبيان تفاعلي لاختبار معرفتك بقانون المالية"
-                      : "Quiz interactif pour tester vos connaissances financières"
+                      : language === "fr"
+                      ? "Quiz interactif pour tester vos connaissances financières"
+                      : "Interactive quiz to test your financial knowledge"
                     }
                   </p>
                 </CardContent>
@@ -247,13 +343,15 @@ const Index = () => {
                   <div className="flex items-center gap-4 mb-4">
                     <TrendingUp className="h-8 w-8 text-primary" />
                     <h3 className="text-lg font-semibold">
-                      {language === "ar" ? "القطاعات" : "Secteurs"}
+                      {language === "ar" ? "القطاعات" : language === "fr" ? "Secteurs" : "Sectors"}
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     {language === "ar" 
                       ? "استكشف ميزانيات القطاعات المختلفة"
-                      : "Explorez les budgets des différents secteurs"
+                      : language === "fr"
+                      ? "Explorez les budgets des différents secteurs"
+                      : "Explore budgets of different sectors"
                     }
                   </p>
                 </CardContent>
@@ -266,13 +364,15 @@ const Index = () => {
                   <div className="flex items-center gap-4 mb-4">
                     <MapPin className="h-8 w-8 text-primary" />
                     <h3 className="text-lg font-semibold">
-                      {language === "ar" ? "منطقتي" : "Ma région"}
+                      {language === "ar" ? "الأقاليم" : language === "fr" ? "Régions" : "Regions"}
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     {language === "ar" 
                       ? "اكتشف المشاريع والميزانية المخصصة لمنطقتك"
-                      : "Découvrez les projets et le budget de votre région"
+                      : language === "fr"
+                      ? "Découvrez les projets et le budget de votre région"
+                      : "Discover projects and budget allocated to your region"
                     }
                   </p>
                 </CardContent>
@@ -291,20 +391,22 @@ const Index = () => {
               <p className="text-sm text-muted-foreground">
                 {language === "ar" 
                   ? "منصة تفاعلية لفهم قانون المالية والميزانيات"
-                  : "Plateforme interactive pour comprendre la loi de finances et les budgets"
+                  : language === "fr"
+                  ? "Plateforme interactive pour comprendre la loi de finances et les budgets"
+                  : "Interactive platform to understand finance law and budgets"
                 }
               </p>
             </div>
             
             <div className="space-y-4">
               <h4 className="font-medium">
-                {language === "ar" ? "الصفحات" : "Pages"}
+                {language === "ar" ? "الصفحات" : language === "fr" ? "Pages" : "Pages"}
               </h4>
               <ul className="space-y-2 text-sm">
                 {navItems.slice(0, 4).map((item) => (
                   <li key={item.to}>
                     <Link to={item.to} className="text-muted-foreground hover:text-primary transition-colors">
-                      {language === "ar" ? item.label : item.labelFr}
+                      {getNavLabel(item)}
                     </Link>
                   </li>
                 ))}
@@ -313,13 +415,13 @@ const Index = () => {
             
             <div className="space-y-4">
               <h4 className="font-medium">
-                {language === "ar" ? "المزيد" : "Plus"}
+                {language === "ar" ? "المزيد" : language === "fr" ? "Plus" : "More"}
               </h4>
               <ul className="space-y-2 text-sm">
                 {navItems.slice(4).map((item) => (
                   <li key={item.to}>
                     <Link to={item.to} className="text-muted-foreground hover:text-primary transition-colors">
-                      {language === "ar" ? item.label : item.labelFr}
+                      {getNavLabel(item)}
                     </Link>
                   </li>
                 ))}
@@ -328,18 +430,19 @@ const Index = () => {
             
             <div className="space-y-4">
               <h4 className="font-medium">
-                {language === "ar" ? "تواصل معنا" : "Contact"}
+                {language === "ar" ? "تواصل معنا" : language === "fr" ? "Contact" : "Contact"}
               </h4>
               <div className="flex gap-2">
                 <Badge variant="outline">العربية</Badge>
                 <Badge variant="outline">Français</Badge>
+                <Badge variant="outline">English</Badge>
               </div>
             </div>
           </div>
           
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
             <p>
-              © 2024 Mizaniaty.ma - {language === "ar" ? "جميع الحقوق محفوظة" : "Tous droits réservés"}
+              © 2024 Mizaniaty.ma - {language === "ar" ? "جميع الحقوق محفوظة" : language === "fr" ? "Tous droits réservés" : "All rights reserved"}
             </p>
           </div>
         </div>
