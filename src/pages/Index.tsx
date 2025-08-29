@@ -22,6 +22,7 @@ const Index = () => {
   const navItems = [
     { to: "/about", label: "من نحن", labelFr: "À propos" },
     { to: "/discover", label: "اكتشف", labelFr: "Découvrir" },
+    { to: "/quiz", label: "اختبر معرفتك", labelFr: "Quiz" },
     { to: "/sectors", label: "القطاعات", labelFr: "Secteurs" },
     { to: "/my-region", label: "منطقتي ومشاريعي", labelFr: "Ma région" },
     { to: "/share-opinion", label: "شارك رأيك", labelFr: "Partager" },
@@ -192,7 +193,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Quick Links Section */}
+            {/* Quick Links Section */}
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
@@ -201,20 +202,39 @@ const Index = () => {
             </h2>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link to="/discover">
               <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-4">
                     <Globe className="h-8 w-8 text-primary" />
-                    <h3 className="text-xl font-semibold">
+                    <h3 className="text-lg font-semibold">
                       {language === "ar" ? "اكتشف" : "Découvrir"}
                     </h3>
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     {language === "ar" 
-                      ? "تعلم كيفية استخدام المنصة وفهم قانون المالية بطريقة مبسطة"
-                      : "Apprenez à utiliser la plateforme et à comprendre la loi de finances de manière simplifiée"
+                      ? "تعلم كيفية استخدام المنصة وفهم قانون المالية"
+                      : "Apprenez à utiliser la plateforme et comprendre la loi de finances"
+                    }
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link to="/quiz">
+              <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-4 mb-4">
+                    <FileText className="h-8 w-8 text-primary" />
+                    <h3 className="text-lg font-semibold">
+                      {language === "ar" ? "اختبر معرفتك" : "Quiz"}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {language === "ar" 
+                      ? "استبيان تفاعلي لاختبار معرفتك بقانون المالية"
+                      : "Quiz interactif pour tester vos connaissances financières"
                     }
                   </p>
                 </CardContent>
@@ -226,14 +246,14 @@ const Index = () => {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-4">
                     <TrendingUp className="h-8 w-8 text-primary" />
-                    <h3 className="text-xl font-semibold">
+                    <h3 className="text-lg font-semibold">
                       {language === "ar" ? "القطاعات" : "Secteurs"}
                     </h3>
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     {language === "ar" 
-                      ? "استكشف ميزانيات القطاعات المختلفة: التعليم، الصحة، البنية التحتية"
-                      : "Explorez les budgets des différents secteurs : éducation, santé, infrastructure"
+                      ? "استكشف ميزانيات القطاعات المختلفة"
+                      : "Explorez les budgets des différents secteurs"
                     }
                   </p>
                 </CardContent>
@@ -245,14 +265,14 @@ const Index = () => {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-4">
                     <MapPin className="h-8 w-8 text-primary" />
-                    <h3 className="text-xl font-semibold">
+                    <h3 className="text-lg font-semibold">
                       {language === "ar" ? "منطقتي" : "Ma région"}
                     </h3>
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     {language === "ar" 
                       ? "اكتشف المشاريع والميزانية المخصصة لمنطقتك"
-                      : "Découvrez les projets et le budget alloués à votre région"
+                      : "Découvrez les projets et le budget de votre région"
                     }
                   </p>
                 </CardContent>
